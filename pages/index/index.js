@@ -123,6 +123,7 @@ Page({
     // 记录当前推荐状态
     console.log('开始生成推荐', {
       '冰箱食材数量': fridgeItems.length,
+      '冰箱食材': fridgeItems,
       '选择的菜系': this.data.selectedCuisine,
       '选择的菜品数量': this.data.selectedDishCount
     });
