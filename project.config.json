@@ -50,9 +50,8 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.17.0",
-  "appid": "wxb4bdeba2ec8af59d",
+  "appid": "wx3ae9c6be8c91ca39",
   "projectname": "今天做什么菜",
-  "isGameTourist": false,
   "condition": {
     "search": {
       "list": []
@@ -74,5 +73,8 @@
     }
   },
   "simulatorPluginLibVersion": {},
-  "editorSetting": {}
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  }
 }
