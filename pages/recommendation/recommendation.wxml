@@ -1,0 +1,124 @@
+<!-- recommendation.wxml -->
+<view class="container">
+  <!-- 顶部标题区域 -->
+  <view class="header">
+    <view class="header-title">今日推荐</view>
+    <view class="header-subtitle">{{recommendation.date}} · {{recommendation.recipes.length}}道菜</view>
+  </view>
+  
+  <!-- 推荐菜品列表 -->
+  <view class="recipe-list">
+    <view 
+      wx:for="{{recommendation.recipes}}" 
+      wx:key="id" 
+      class="recipe-card" 
+      bindtap="viewRecipeDetail" 
+      data-id="{{item.id}}"
+    >
+      <view class="recipe-image-container">
+        <image class="recipe-image" src="{{item.image || '/images/default-recipe.png'}}"></image>
+        <view class="recipe-match" wx:if="{{item.matchRate}}">
+          <text>匹配度 {{item.matchRate * 100}}%</text>
+        </view>
+      </view>
+      <view class="recipe-info">
+        <view class="recipe-name">{{item.name}}</view>
+        <view class="recipe-meta">
+          <view class="recipe-meta-item">
+            <text class="iconfont icon-time"></text>
+            <text>{{item.time}}分钟</text>
+          </view>
+          <view class="recipe-meta-item">
+            <text class="iconfont icon-difficulty"></text>
+            <text>{{getDifficultyText(item.difficulty)}}</text>
+          </view>
+        </view>
+        <view class="recipe-ingredients">
+          <text class="recipe-ingredients-title">所需食材：</text>
+          <view class="recipe-ingredients-list">
+            <text 
+              wx:for="{{item.ingredients}}" 
+              wx:key="id" 
+              wx:for-item="ingredient" 
+              class="ingredient-tag {{isIngredientAvailable(ingredient.id) ? 'available' : 'unavailable'}}"
+            >
+              {{ingredient.name}} {{ingredient.amount}}
+            </text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="btn btn-outline" bindtap="regenerate">
+      <text class="iconfont icon-refresh"></text>
+      <text>换一批</text>
+    </button>
+    <button class="btn btn-primary" bindtap="saveRecommendation">
+      <text class="iconfont icon-star"></text>
+      <text>收藏组合</text>
+    </button>
+  </view>
+  
+  <!-- 营养均衡分析 -->
+  <view class="nutrition-analysis card">
+    <view class="card-header">
+      <text>营养均衡分析</text>
+    </view>
+    <view class="card-body">
+      <view class="nutrition-chart">
+        <!-- 这里可以添加营养分析图表，如饼图等 -->
+        <view class="nutrition-placeholder">营养分析图表</view>
+      </view>
+      <view class="nutrition-summary">
+        <view class="nutrition-item">
+          <text class="nutrition-label">热量</text>
+          <text class="nutrition-value">{{totalNutrition.calories}} 千卡</text>
+        </view>
+        <view class="nutrition-item">
+          <text class="nutrition-label">蛋白质</text>
+          <text class="nutrition-value">{{totalNutrition.protein}}</text>
+        </view>
+        <view class="nutrition-item">
+          <text class="nutrition-label">脂肪</text>
+          <text class="nutrition-value">{{totalNutrition.fat}}</text>
+        </view>
+        <view class="nutrition-item">
+          <text class="nutrition-label">碳水化合物</text>
+          <text class="nutrition-value">{{totalNutrition.carbs}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 烹饪建议 -->
+  <view class="cooking-tips card">
+    <view class="card-header">
+      <text>烹饪建议</text>
+    </view>
+    <view class="card-body">
+      <view class="tip-item">
+        <text class="iconfont icon-tip"></text>
+        <text class="tip-text">优先使用临期食材，减少浪费</text>
+      </view>
+      <view class="tip-item">
+        <text class="iconfont icon-tip"></text>
+        <text class="tip-text">建议先准备所有食材再开始烹饪</text>
+      </view>
+      <view class="tip-item">
+        <text class="iconfont icon-tip"></text>
+        <text class="tip-text">可以同时烹饪多道菜，提高效率</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 底部分享区域 -->
+  <view class="share-section">
+    <button class="share-button" open-type="share">
+      <text class="iconfont icon-share"></text>
+      <text>分享给朋友</text>
+    </button>
+  </view>
+</view>

@@ -1,0 +1,56 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/fridge/fridge",
+    "pages/recipe/recipe",
+    "pages/recommendation/recommendation",
+    "pages/profile/profile",
+    "pages/favorites/favorites"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#4CAF50",
+    "navigationBarTitleText": "智能菜谱",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#4CAF50",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/icons/home.png",
+        "selectedIconPath": "images/icons/home_selected.png"
+      },
+      {
+        "pagePath": "pages/fridge/fridge",
+        "text": "我的冰箱",
+        "iconPath": "images/icons/fridge.png",
+        "selectedIconPath": "images/icons/fridge_selected.png"
+      },
+      {
+        "pagePath": "pages/recipe/recipe",
+        "text": "菜谱",
+        "iconPath": "images/icons/recipe.png",
+        "selectedIconPath": "images/icons/recipe_selected.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/icons/profile.png",
+        "selectedIconPath": "images/icons/profile_selected.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于提供本地服务"
+    }
+  },
+  "requiredPrivateInfos": ["chooseAddress", "chooseLocation", "choosePoi", "getLocation"]
+}

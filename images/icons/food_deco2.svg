@@ -1,0 +1,11 @@
+<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#f0f0f0" stroke="#e0e0e0" stroke-width="1">
+    <!-- 简单的盘子图案 -->
+    <circle cx="50" cy="50" r="30" />
+    <circle cx="50" cy="50" r="25" fill="none" />
+    
+    <!-- 简单的筷子图案 -->
+    <path d="M85,30 L85,80" stroke-width="3" />
+    <path d="M75,30 L75,80" stroke-width="3" />
+  </g>
+</svg>

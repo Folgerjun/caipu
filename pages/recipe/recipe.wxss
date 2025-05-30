@@ -1,0 +1,419 @@
+/* recipe.wxss */
+
+/* 顶部图片区域 */
+.recipe-header {
+  position: relative;
+  width: 100%;
+  height: 400rpx;
+}
+
+.recipe-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.recipe-header-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30rpx;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  color: #fff;
+}
+
+.recipe-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 16rpx;
+}
+
+.recipe-meta {
+  display: flex;
+  align-items: center;
+}
+
+.recipe-meta-item {
+  display: flex;
+  align-items: center;
+  margin-right: 30rpx;
+  font-size: 24rpx;
+}
+
+.recipe-meta-item .iconfont {
+  margin-right: 8rpx;
+  font-size: 28rpx;
+}
+
+.favorite-button {
+  position: absolute;
+  top: 30rpx;
+  right: 30rpx;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.favorite-button .iconfont {
+  font-size: 40rpx;
+  color: #fff;
+}
+
+.favorite-button .icon-heart-filled {
+  color: #ff4d4f;
+}
+
+/* 内容区域通用样式 */
+.section {
+  margin: 30rpx 0;
+  padding: 0 30rpx;
+}
+
+.section-header {
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.section-subtitle {
+  font-size: 24rpx;
+  color: #999;
+  margin-left: 10rpx;
+}
+
+/* 食材列表 */
+.ingredients-list {
+  background-color: #fff;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.ingredient-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.ingredient-item:last-child {
+  border-bottom: none;
+}
+
+.ingredient-name {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.ingredient-amount {
+  font-size: 26rpx;
+  color: #666;
+  margin-right: 20rpx;
+}
+
+.ingredient-status {
+  font-size: 24rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+}
+
+.ingredient-status.available {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #4CAF50;
+}
+
+.ingredient-status.unavailable {
+  background-color: rgba(158, 158, 158, 0.1);
+  color: #9e9e9e;
+}
+
+/* 营养信息 */
+.nutrition-info {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  padding: 20rpx;
+}
+
+.nutrition-item {
+  flex: 1;
+  text-align: center;
+}
+
+.nutrition-value {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #4CAF50;
+  margin-bottom: 8rpx;
+}
+
+.nutrition-label {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 烹饪步骤 */
+.steps-list {
+  background-color: #fff;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.step-item {
+  display: flex;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.step-item:last-child {
+  border-bottom: none;
+}
+
+.step-number {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background-color: #4CAF50;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-description {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 16rpx;
+}
+
+.step-image {
+  width: 100%;
+  height: 300rpx;
+  border-radius: 8rpx;
+  object-fit: cover;
+}
+
+/* 烹饪技巧 */
+.tips-list {
+  background-color: #fff;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  padding: 20rpx;
+}
+
+.tip-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 16rpx;
+}
+
+.tip-item:last-child {
+  margin-bottom: 0;
+}
+
+.tip-item .iconfont {
+  color: #4CAF50;
+  margin-right: 10rpx;
+  font-size: 28rpx;
+}
+
+.tip-text {
+  flex: 1;
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* 底部操作区 */
+.bottom-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 30rpx;
+  margin-top: 30rpx;
+}
+
+.action-button {
+  flex: 1;
+  margin: 0 10rpx;
+  height: 80rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  background-color: #fff;
+  color: #4CAF50;
+  border: 1rpx solid #4CAF50;
+}
+
+.action-button .iconfont {
+  margin-right: 10rpx;
+}
+
+/* 标签页样式 */
+.tabs {
+  display: flex;
+  width: 100%;
+  background-color: #fff;
+  border-bottom: 1rpx solid #f0f0f0;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  font-size: 30rpx;
+  color: #666;
+  padding: 24rpx 0;
+  position: relative;
+}
+
+.tab.active {
+  color: #4CAF50;
+  font-weight: 500;
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40rpx;
+  height: 4rpx;
+  background-color: #4CAF50;
+  border-radius: 2rpx;
+}
+
+/* 菜谱列表 */
+.recipe-list-container {
+  padding: 20rpx;
+}
+
+.recipe-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.recipe-card {
+  display: flex;
+  background-color: #fff;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.recipe-card-image {
+  width: 200rpx;
+  height: 200rpx;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.recipe-card-content {
+  flex: 1;
+  padding: 16rpx;
+}
+
+.recipe-card-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 12rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recipe-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-bottom: 12rpx;
+}
+
+.recipe-card-meta-item {
+  display: flex;
+  align-items: center;
+  font-size: 22rpx;
+  color: #666;
+}
+
+.recipe-card-ingredients {
+  display: flex;
+  font-size: 22rpx;
+  color: #999;
+}
+
+.ingredient-label {
+  margin-right: 8rpx;
+}
+
+.ingredient-list {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 空状态提示 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+}
+
+.empty-state-image {
+  width: 240rpx;
+  height: 240rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-state-text {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.empty-state-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 240rpx;
+  height: 70rpx;
+  background-color: #4CAF50;
+  color: #fff;
+  font-size: 26rpx;
+  border-radius: 35rpx;
+}
+
+.empty-state-button .iconfont {
+  margin-right: 8rpx;
+}

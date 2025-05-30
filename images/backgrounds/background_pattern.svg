@@ -1,0 +1,35 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景色 -->
+  <rect width="200" height="200" fill="none"/>
+  
+  <!-- 简单的餐具图案 -->
+  <!-- 叉子 -->
+  <g fill="#f0f0f0" stroke="#e0e0e0" stroke-width="1">
+    <path d="M40,30 L40,80 L35,85 L35,90 L45,90 L45,85 L40,80 Z" />
+    <path d="M50,30 L50,45 M50,50 L50,65 M50,70 L50,80 L45,85 L45,90 L55,90 L55,85 L50,80 Z" />
+    <path d="M60,30 L60,80 L55,85 L55,90 L65,90 L65,85 L60,80 Z" />
+  </g>
+  
+  <!-- 勺子 -->
+  <g fill="#f0f0f0" stroke="#e0e0e0" stroke-width="1">
+    <ellipse cx="130" cy="40" rx="15" ry="10" />
+    <path d="M130,50 L130,90" stroke-width="3" />
+  </g>
+  
+  <!-- 盘子 -->
+  <g fill="#f0f0f0" stroke="#e0e0e0" stroke-width="1">
+    <circle cx="60" cy="150" r="25" />
+    <circle cx="60" cy="150" r="20" fill="none" />
+  </g>
+  
+  <!-- 碗 -->
+  <g fill="#f0f0f0" stroke="#e0e0e0" stroke-width="1">
+    <path d="M140,150 C140,135 160,135 160,150 L155,170 L145,170 Z" />
+    <line x1="140" y1="150" x2="160" y2="150" />
+  </g>
+
+  <!-- 菜叶 -->
+  <g fill="#f0f0f0" stroke="#e0e0e0" stroke-width="1">
+    <path d="M100,40 C110,20 120,30 110,45 C120,40 130,50 110,60 C115,70 100,70 95,55 C85,65 80,50 100,40 Z" />
+  </g>
+</svg>

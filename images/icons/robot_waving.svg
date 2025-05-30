@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64" height="64">
+  <!-- 机器人头部 -->
+  <rect x="136" y="96" width="240" height="200" rx="20" ry="20" fill="#6b7efc" />
+  
+  <!-- 眼睛 -->
+  <circle cx="200" cy="160" r="20" fill="#fff" />
+  <circle cx="312" cy="160" r="20" fill="#fff" />
+  <circle cx="200" cy="160" r="10" fill="#000" />
+  <circle cx="312" cy="160" r="10" fill="#000" />
+  
+  <!-- 微笑 -->
+  <path d="M220,200 Q256,230 292,200" stroke="#fff" stroke-width="6" fill="none" />
+  
+  <!-- 天线 -->
+  <line x1="190" y1="96" x2="180" y2="60" stroke="#6b7efc" stroke-width="8" />
+  <circle cx="180" cy="50" r="10" fill="#ff5252" />
+  
+  <line x1="322" y1="96" x2="332" y2="60" stroke="#6b7efc" stroke-width="8" />
+  <circle cx="332" cy="50" r="10" fill="#ff5252" />
+  
+  <!-- 机器人身体 -->
+  <rect x="166" y="296" width="180" height="120" rx="10" ry="10" fill="#8c9eff" />
+  
+  <!-- 胳膊 -->
+  <rect x="346" y="310" width="80" height="20" rx="10" ry="10" fill="#6b7efc" transform="rotate(30 346 310)" />
+  <circle cx="415" cy="285" r="15" fill="#8c9eff" />
+  
+  <rect x="86" y="310" width="80" height="20" rx="10" ry="10" fill="#6b7efc" transform="rotate(-10 86 310)" />
+  <circle cx="75" cy="318" r="15" fill="#8c9eff" />
+  
+  <!-- 腿 -->
+  <rect x="186" y="416" width="30" height="60" rx="10" ry="10" fill="#6b7efc" />
+  <rect x="296" y="416" width="30" height="60" rx="10" ry="10" fill="#6b7efc" />
+  
+  <!-- 脚 -->
+  <rect x="176" y="476" width="50" height="10" rx="5" ry="5" fill="#5c6bc0" />
+  <rect x="286" y="476" width="50" height="10" rx="5" ry="5" fill="#5c6bc0" />
+  
+  <!-- 控制面板 -->
+  <rect x="206" y="320" width="100" height="60" rx="5" ry="5" fill="#5c6bc0" />
+  <circle cx="226" cy="340" r="10" fill="#ff5252" />
+  <circle cx="256" cy="340" r="10" fill="#ffeb3b" />
+  <circle cx="286" cy="340" r="10" fill="#4caf50" />
+  
+  <!-- 招手的手 (动画效果) -->
+  <g>
+    <animateTransform 
+      attributeName="transform" 
+      type="rotate"
+      from="0 415 285" 
+      to="20 415 285"
+      dur="0.5s" 
+      repeatCount="indefinite"
+      values="0 415 285; 20 415 285; 0 415 285"
+      keyTimes="0; 0.5; 1"
+    />
+    <circle cx="415" cy="285" r="15" fill="#8c9eff" />
+  </g>
+</svg>

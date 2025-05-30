@@ -1,0 +1,160 @@
+/* favorites.wxss */
+
+.container {
+  padding: 30rpx;
+}
+
+/* 标题样式 */
+.header {
+  margin-bottom: 30rpx;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.header-subtitle {
+  font-size: 26rpx;
+  color: #888;
+  margin-top: 10rpx;
+}
+
+/* 菜谱卡片列表 */
+.recipe-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+  margin-bottom: 40rpx;
+}
+
+.recipe-card {
+  display: flex;
+  background-color: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.recipe-image-container {
+  width: 200rpx;
+  height: 200rpx;
+  flex-shrink: 0;
+}
+
+.recipe-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.recipe-info {
+  flex: 1;
+  padding: 20rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.recipe-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.recipe-meta {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 10rpx;
+  flex-wrap: wrap;
+}
+
+.recipe-meta-item {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.recipe-meta-item text {
+  margin-right: 4rpx;
+}
+
+.recipe-ingredients {
+  margin-top: 10rpx;
+}
+
+.recipe-ingredients-title {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.recipe-ingredients-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 8rpx;
+}
+
+.ingredient-tag {
+  font-size: 22rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 30rpx;
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.ingredient-tag.available {
+  background-color: #e8f5e9;
+  color: #4CAF50;
+}
+
+.ingredient-tag.unavailable {
+  background-color: #fbe9e7;
+  color: #ff5722;
+}
+
+/* 取消收藏按钮 */
+.unfavorite-button {
+  position: absolute;
+  top: 16rpx;
+  right: 16rpx;
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #ff5252;
+  font-size: 32rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+}
+
+.empty-image {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.empty-desc {
+  font-size: 26rpx;
+  color: #999;
+  text-align: center;
+}

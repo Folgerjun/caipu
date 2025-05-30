@@ -1,0 +1,185 @@
+<!-- recipe.wxml -->
+<view class="container">
+  <!-- 详情模式 -->
+  <block wx:if="{{isDetailMode}}">
+    <!-- 菜谱头部 -->
+    <view class="recipe-header">
+      <image class="recipe-image" src="{{recipeData.image || '/images/default-recipe.png'}}" mode="aspectFill"></image>
+      <view class="recipe-header-overlay">
+        <view class="recipe-title">{{recipeData.name}}</view>
+        <view class="recipe-meta">
+          <view class="recipe-meta-item">
+            <text class="iconfont icon-time"></text>
+            <text>{{recipeData.time}}分钟</text>
+          </view>
+          <view class="recipe-meta-item">
+            <text class="iconfont icon-difficulty"></text>
+            <text>{{getDifficultyText(recipeData.difficulty)}}</text>
+          </view>
+          <view class="recipe-meta-item">
+            <text class="iconfont icon-cuisine"></text>
+            <text>{{getCuisineText(recipeData.cuisine)}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="favorite-button" bindtap="toggleFavorite">
+        <text class="iconfont {{isFavorite ? 'icon-heart-filled' : 'icon-heart'}}"></text>
+      </view>
+    </view>
+    
+    <!-- 食材清单 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">食材清单</text>
+      </view>
+      <view class="ingredients-list">
+        <view class="ingredient-item" wx:for="{{recipeData.ingredients}}" wx:key="name">
+          <text class="ingredient-name">{{item.name}}</text>
+          <text class="ingredient-amount">{{item.amount}}</text>
+          <text class="ingredient-status {{isIngredientAvailable(item.name) ? 'available' : 'unavailable'}}">
+            {{isIngredientAvailable(item.name) ? '冰箱有' : '需采购'}}
+          </text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 营养信息 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">营养信息</text>
+        <text class="section-subtitle">每100克</text>
+      </view>
+      <view class="nutrition-info">
+        <view class="nutrition-item">
+          <text class="nutrition-value">{{recipeData.nutrition.calories}}</text>
+          <text class="nutrition-label">热量(千卡)</text>
+        </view>
+        <view class="nutrition-item">
+          <text class="nutrition-value">{{recipeData.nutrition.protein}}</text>
+          <text class="nutrition-label">蛋白质(克)</text>
+        </view>
+        <view class="nutrition-item">
+          <text class="nutrition-value">{{recipeData.nutrition.fat}}</text>
+          <text class="nutrition-label">脂肪(克)</text>
+        </view>
+        <view class="nutrition-item">
+          <text class="nutrition-value">{{recipeData.nutrition.carbs}}</text>
+          <text class="nutrition-label">碳水(克)</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 烹饪步骤 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">烹饪步骤</text>
+      </view>
+      <view class="steps-list">
+        <view class="step-item" wx:for="{{recipeData.steps}}" wx:key="*this">
+          <view class="step-number">{{index + 1}}</view>
+          <view class="step-content">
+            <text class="step-description">{{item}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 烹饪技巧 -->
+    <view class="section" wx:if="{{recipeData.tips && recipeData.tips.length}}">
+      <view class="section-header">
+        <text class="section-title">烹饪技巧</text>
+      </view>
+      <view class="tips-list">
+        <view class="tip-item" wx:for="{{recipeData.tips}}" wx:key="*this">
+          <text class="iconfont icon-tip"></text>
+          <text class="tip-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 底部操作区 -->
+    <view class="bottom-actions">
+      <button class="action-button" bindtap="backToRecommendation" wx:if="{{recommendationId}}">
+        <text class="iconfont icon-back"></text>
+        <text>返回推荐</text>
+      </button>
+      <button class="action-button" open-type="share">
+        <text class="iconfont icon-share"></text>
+        <text>分享菜谱</text>
+      </button>
+    </view>
+  </block>
+  
+  <!-- 列表模式 -->
+  <block wx:else>
+    <!-- 标签页 -->
+    <view class="tabs">
+      <view class="tab {{activeTab === 'recent' ? 'active' : ''}}" bindtap="switchTab" data-tab="recent">最近推荐</view>
+      <view class="tab {{activeTab === 'favorite' ? 'active' : ''}}" bindtap="switchTab" data-tab="favorite">我的收藏</view>
+    </view>
+    
+    <view class="recipe-list-container">
+      <!-- 最近推荐 -->
+      <view class="recipe-list" wx:if="{{activeTab === 'recent' && !showEmptyState}}">
+        <view class="recipe-card" wx:for="{{recentRecommendations}}" wx:key="id" bindtap="viewRecipeDetail" data-id="{{item.id}}">
+          <image class="recipe-card-image" src="{{item.image || '/images/default-recipe.png'}}" mode="aspectFill"></image>
+          <view class="recipe-card-content">
+            <view class="recipe-card-title">{{item.name}}</view>
+            <view class="recipe-card-meta">
+              <view class="recipe-card-meta-item">
+                <text>{{item.time}}分钟</text>
+              </view>
+              <view class="recipe-card-meta-item">
+                <text>{{getDifficultyText(item.difficulty)}}</text>
+              </view>
+              <view class="recipe-card-meta-item">
+                <text>{{getCuisineText(item.cuisine)}}</text>
+              </view>
+            </view>
+            <view class="recipe-card-ingredients">
+              <text class="ingredient-label">食材:</text>
+              <text class="ingredient-list">{{item.ingredients[0].name}}, {{item.ingredients[1].name}}, {{item.ingredients[2].name}}{{item.ingredients.length > 3 ? '...' : ''}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 我的收藏 -->
+      <view class="recipe-list" wx:if="{{activeTab === 'favorite' && !showEmptyState}}">
+        <view class="recipe-card" wx:for="{{favoriteRecipes}}" wx:key="id" bindtap="viewRecipeDetail" data-id="{{item.id}}">
+          <image class="recipe-card-image" src="{{item.image || '/images/default-recipe.png'}}" mode="aspectFill"></image>
+          <view class="recipe-card-content">
+            <view class="recipe-card-title">{{item.name}}</view>
+            <view class="recipe-card-meta">
+              <view class="recipe-card-meta-item">
+                <text>{{item.time}}分钟</text>
+              </view>
+              <view class="recipe-card-meta-item">
+                <text>{{getDifficultyText(item.difficulty)}}</text>
+              </view>
+              <view class="recipe-card-meta-item">
+                <text>{{getCuisineText(item.cuisine)}}</text>
+              </view>
+            </view>
+            <view class="recipe-card-ingredients">
+              <text class="ingredient-label">食材:</text>
+              <text class="ingredient-list">{{item.ingredients[0].name}}, {{item.ingredients[1].name}}, {{item.ingredients[2].name}}{{item.ingredients.length > 3 ? '...' : ''}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 空状态提示 -->
+      <view class="empty-state" wx:if="{{showEmptyState}}">
+        <image class="empty-state-image" src="/images/icons/empty_fridge.png" mode="aspectFit"></image>
+        <view class="empty-state-text">
+          {{activeTab === 'recent' ? '还没有推荐历史，去首页获取推荐吧！' : '还没有收藏菜谱，去探索更多美食吧！'}}
+        </view>
+        <navigator url="/pages/index/index" open-type="switchTab" class="empty-state-button">
+          <text class="iconfont icon-home"></text>
+          <text>前往首页</text>
+        </navigator>
+      </view>
+    </view>
+  </block>
+</view>

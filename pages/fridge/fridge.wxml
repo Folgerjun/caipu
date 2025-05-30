@@ -1,0 +1,263 @@
+<!-- fridge.wxml -->
+<view class="container">
+  <!-- 顶部搜索和添加区域 -->
+  <view class="search-bar">
+    <view class="search-input-wrapper">
+      <text class="iconfont icon-search"></text>
+      <input 
+        class="search-input" 
+        placeholder="搜索食材" 
+        confirm-type="search" 
+        value="{{searchKeyword}}" 
+        bindinput="onSearchInput" 
+        bindconfirm="onSearchConfirm"
+      />
+      <text class="iconfont icon-clear" wx:if="{{searchKeyword}}" bindtap="clearSearch"></text>
+    </view>
+    <view class="add-btn" bindtap="showAddFoodModal">
+      <text class="iconfont icon-add"></text>
+    </view>
+  </view>
+  
+  <!-- 食材分类标签 -->
+  <view class="category-tabs">
+    <scroll-view scroll-x class="scroll-view-x">
+      <view class="category-tabs-content">
+        <view 
+          class="category-tab {{currentCategory === 'all' ? 'active' : ''}}" 
+          bindtap="switchCategory" 
+          data-category="all"
+        >
+          全部
+        </view>
+        <view 
+          wx:for="{{categories}}" 
+          wx:key="id" 
+          class="category-tab {{currentCategory === item.id ? 'active' : ''}}" 
+          bindtap="switchCategory" 
+          data-category="{{item.id}}"
+        >
+          {{item.name}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  
+  <!-- 食材列表 -->
+  <view class="food-list-container">
+    <!-- 临期食材提醒 -->
+    <view class="expiring-section" wx:if="{{expiringItems.length > 0}}">
+      <view class="section-title warning">
+        <text class="iconfont icon-alert"></text>
+        <text>临期食材 ({{expiringItems.length}})</text>
+      </view>
+      <view class="food-list">
+        <view 
+          wx:for="{{expiringItems}}" 
+          wx:key="id" 
+          class="food-item {{item.freshness === 'expired' ? 'expired' : 'expiring'}}" 
+          bind:touchstart="touchStart" 
+          bind:touchend="touchEnd" 
+          data-index="{{index}}"
+        >
+          <view class="food-info" bindtap="showFoodDetail" data-id="{{item.id}}">
+            <view class="food-name">{{item.name}}</view>
+            <view class="food-meta">
+              <text class="food-quantity">{{item.quantity}}{{item.unit}}</text>
+              <text class="food-date">{{item.freshness === 'expired' ? '已过期' : '剩余' + item.remainingDays + '天'}}</text>
+            </view>
+          </view>
+          <view class="food-actions">
+            <view class="food-action" catchtap="editFood" data-id="{{item.id}}">
+              <text class="iconfont icon-edit"></text>
+            </view>
+            <view class="food-action delete" catchtap="deleteFood" data-id="{{item.id}}">
+              <text class="iconfont icon-delete"></text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 正常食材列表 -->
+    <view class="normal-section">
+      <view class="section-title" wx:if="{{expiringItems.length > 0}}">
+        <text>其他食材</text>
+      </view>
+      <block wx:if="{{filteredFoodItems.length > 0}}">
+        <view class="food-list">
+          <view 
+            wx:for="{{filteredFoodItems}}" 
+            wx:key="id" 
+            class="food-item" 
+            bind:touchstart="touchStart" 
+            bind:touchend="touchEnd" 
+            data-index="{{index}}"
+          >
+            <view class="food-info" bindtap="showFoodDetail" data-id="{{item.id}}">
+              <view class="food-name">{{item.name}}</view>
+              <view class="food-meta">
+                <text class="food-quantity">{{item.quantity}}{{item.unit}}</text>
+                <text class="food-date" wx:if="{{item.expiryDate}}">{{item.expiryDate}}</text>
+              </view>
+            </view>
+            <view class="food-actions">
+              <view class="food-action" catchtap="editFood" data-id="{{item.id}}">
+                <text class="iconfont icon-edit"></text>
+              </view>
+              <view class="food-action delete" catchtap="deleteFood" data-id="{{item.id}}">
+                <text class="iconfont icon-delete"></text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="empty-state">
+          <text class="iconfont icon-fridge"></text>
+          <text class="empty-text">冰箱空空如也，去添加食材吧</text>
+        </view>
+      </block>
+    </view>
+  </view>
+  
+  <!-- 浮动按钮组 -->
+  <!-- 悬浮添加按钮区域 -->
+  <!-- 浮动按钮容器 -->
+  <view class="float-btn-container">
+
+  <!-- 添加食材按钮 -->
+  <view class="float-btn" bindtap="showAddFoodModal">
+    <image class="add-icon" src="/images/icons/add.png" mode="aspectFit"></image>
+  </view>
+</view>
+  
+  <!-- 添加食材弹窗 -->
+  <view class="modal" wx:if="{{showAddModal}}">
+    <view class="modal-mask" bindtap="hideAddFoodModal"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text>{{newFood.id ? '编辑食材' : '添加食材'}}</text>
+        <text class="modal-close" bindtap="hideAddFoodModal">×</text>
+      </view>
+      <view class="modal-body">
+        <view class="form-group">
+          <text class="form-label">名称</text>
+          <input 
+            class="form-input" 
+            placeholder="请输入食材名称" 
+            value="{{newFood.name}}" 
+            bindinput="inputFoodName"
+          />
+        </view>
+        <view class="form-group">
+          <text class="form-label">分类</text>
+          <view class="category-select">
+            <view 
+              wx:for="{{categories}}" 
+              wx:key="id" 
+              class="category-option {{newFood.category === item.id ? 'active' : ''}}" 
+              bindtap="selectCategory" 
+              data-category="{{item.id}}"
+            >
+              {{item.name}}
+            </view>
+          </view>
+        </view>
+        <view class="form-group form-row">
+          <view class="form-col">
+            <text class="form-label">数量</text>
+            <input 
+              class="form-input" 
+              type="digit" 
+              placeholder="请输入数量" 
+              value="{{newFood.quantity}}" 
+              bindinput="inputFoodQuantity"
+            />
+          </view>
+          <view class="form-col">
+            <text class="form-label">单位</text>
+            <input 
+              class="form-input" 
+              placeholder="如：个、袋、克" 
+              value="{{newFood.unit}}" 
+              bindinput="inputFoodUnit"
+            />
+          </view>
+        </view>
+        <view class="form-group">
+          <text class="form-label">保质期</text>
+          <picker 
+            mode="date" 
+            value="{{newFood.expiryDate}}" 
+            start="{{today}}" 
+            bindchange="selectExpiryDate"
+          >
+            <view class="picker-view">
+              <block wx:if="{{newFood.expiryDate}}">
+                {{newFood.expiryDate}}
+              </block>
+              <block wx:else>
+                <text class="placeholder">选择保质期日期</text>
+              </block>
+            </view>
+          </picker>
+        </view>
+        <view class="form-group">
+          <text class="form-label">备注</text>
+          <textarea 
+            class="form-textarea" 
+            placeholder="添加备注信息" 
+            value="{{newFood.note}}" 
+            bindinput="inputFoodNote"
+          ></textarea>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <button class="btn btn-outline" bindtap="hideAddFoodModal">取消</button>
+        <button class="btn btn-primary" bindtap="saveFood">保存</button>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 食材详情弹窗 -->
+  <view class="modal" wx:if="{{showDetailModal}}">
+    <view class="modal-mask" bindtap="hideDetailModal"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text>食材详情</text>
+        <text class="modal-close" bindtap="hideDetailModal">×</text>
+      </view>
+      <view class="modal-body">
+        <view class="detail-item">
+          <text class="detail-label">名称</text>
+          <text class="detail-value">{{currentFood.name}}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-label">分类</text>
+          <text class="detail-value">{{currentFoodCategory}}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-label">数量</text>
+          <text class="detail-value">{{currentFood.quantity}}{{currentFood.unit}}</text>
+        </view>
+        <view class="detail-item" wx:if="{{currentFood.expiryDate}}">
+          <text class="detail-label">保质期</text>
+          <text class="detail-value {{currentFood.freshness !== 'normal' ? 'warning-text' : ''}}">{{currentFood.expiryDate}} ({{currentFood.freshness === 'expired' ? '已过期' : '剩余' + currentFood.remainingDays + '天'}})</text>
+        </view>
+        <view class="detail-item" wx:if="{{currentFood.note}}">
+          <text class="detail-label">备注</text>
+          <text class="detail-value">{{currentFood.note}}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-label">添加时间</text>
+          <text class="detail-value">{{currentFood.addDate}}</text>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <button class="btn btn-outline" bindtap="editFood" data-id="{{currentFood.id}}">编辑</button>
+        <button class="btn btn-primary" bindtap="hideDetailModal">确定</button>
+      </view>
+    </view>
+  </view>
+</view>

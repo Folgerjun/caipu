@@ -1,0 +1,10 @@
+<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+  <!-- 米饭 -->
+  <g transform="translate(10, 10)" fill="#eeeeee" stroke="#dddddd" stroke-width="1">
+    <path d="M0,20 C0,10 10,0 20,0 C30,0 40,10 40,20 C40,30 30,40 20,40 C10,40 0,30 0,20 Z" />
+    <circle cx="10" cy="15" r="2" fill="#dddddd" />
+    <circle cx="15" cy="25" r="2" fill="#dddddd" />
+    <circle cx="25" cy="15" r="2" fill="#dddddd" />
+    <circle cx="30" cy="25" r="2" fill="#dddddd" />
+  </g>
+</svg>

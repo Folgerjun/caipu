@@ -1,0 +1,406 @@
+/**fridge.wxss**/
+
+/* 顶部搜索和添加区域 */
+.search-bar {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  background-color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.search-input-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 70rpx;
+  background-color: #f5f5f5;
+  border-radius: 35rpx;
+  padding: 0 20rpx;
+}
+
+.search-input {
+  flex: 1;
+  height: 70rpx;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+}
+
+.add-btn {
+  width: 70rpx;
+  height: 70rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20rpx;
+  background-color: #4CAF50;
+  color: #fff;
+  border-radius: 50%;
+}
+
+.iconfont {
+  font-size: 36rpx;
+}
+
+.icon-search, .icon-clear {
+  color: #999;
+  font-size: 32rpx;
+}
+
+/* 分类标签 */
+.category-tabs {
+  background-color: #fff;
+  padding: 10rpx 0;
+  position: sticky;
+  top: 110rpx;
+  z-index: 9;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.category-tabs-content {
+  display: flex;
+  padding: 0 30rpx;
+  white-space: nowrap;
+}
+
+.category-tab {
+  display: inline-block;
+  padding: 16rpx 30rpx;
+  margin-right: 20rpx;
+  font-size: 28rpx;
+  color: #666;
+  border-radius: 30rpx;
+  background-color: #f5f5f5;
+}
+
+.category-tab.active {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+/* 食材列表 */
+.food-list-container {
+  padding: 20rpx 30rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  margin: 20rpx 0;
+  display: flex;
+  align-items: center;
+}
+
+.section-title.warning {
+  color: #FF9800;
+}
+
+.section-title .iconfont {
+  margin-right: 10rpx;
+}
+
+.food-list {
+  background-color: #fff;
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.food-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+  position: relative;
+}
+
+.food-item:last-child {
+  border-bottom: none;
+}
+
+.food-item.expiring {
+  background-color: rgba(255, 152, 0, 0.05);
+}
+
+.food-item.expired {
+  background-color: rgba(244, 67, 54, 0.05);
+}
+
+.food-info {
+  flex: 1;
+}
+
+.food-name {
+  font-size: 30rpx;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.food-meta {
+  display: flex;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.food-quantity {
+  margin-right: 20rpx;
+}
+
+.food-date {
+  color: #FF9800;
+}
+
+.food-actions {
+  display: flex;
+}
+
+.food-action {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10rpx;
+  color: #999;
+}
+
+.food-action.delete {
+  color: #F44336;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+  color: #999;
+}
+
+.empty-state .iconfont {
+  font-size: 80rpx;
+  color: #ddd;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+}
+
+/* 浮动添加按钮 */
+/* 浮动按钮容器 */
+.float-btn-container {
+  position: fixed;
+  right: 30rpx;
+  bottom: 30rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20rpx;
+  z-index: 99;
+}
+
+.float-btn {
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 50%;
+  background: #4CAF50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
+}
+
+.add-icon {
+  width: 50rpx;
+  height: 50rpx;
+  /* 添加滤镜使图标显示为白色 */
+  filter: brightness(0) invert(1);
+}
+
+.btn-icon {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.float-btn .add-icon {
+  width: 50rpx;
+  height: 50rpx;
+  /* 添加滤镜使图标显示为白色 */
+  filter: brightness(0) invert(1);
+}
+
+/* 原iconfont样式保留 */
+.float-btn .iconfont {
+  font-size: 50rpx;
+}
+
+/* 弹窗 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  position: relative;
+  width: 80%;
+  max-width: 600rpx;
+  background-color: #fff;
+  border-radius: 12rpx;
+  overflow: hidden;
+  z-index: 1001;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+.modal-close {
+  font-size: 40rpx;
+  color: #999;
+}
+
+.modal-body {
+  padding: 30rpx;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx 30rpx;
+  border-top: 1rpx solid #f5f5f5;
+}
+
+.modal-footer .btn {
+  flex: 1;
+  margin: 0 10rpx;
+}
+
+/* 表单元素 */
+.form-group {
+  margin-bottom: 30rpx;
+}
+
+/* 分类选择 */
+.category-select {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -10rpx;
+}
+
+.category-option {
+  padding: 16rpx 24rpx;
+  margin: 10rpx;
+  font-size: 28rpx;
+  color: #666;
+  background-color: #f5f5f5;
+  border-radius: 30rpx;
+  box-shadow: 0 2rpx 5rpx rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.category-option.active {
+  background-color: #4CAF50;
+  color: #fff;
+  box-shadow: 0 2rpx 10rpx rgba(76, 175, 80, 0.3);
+}
+
+.form-row {
+  display: flex;
+  margin: 0 -10rpx;
+}
+
+.form-group-half {
+  flex: 1;
+  margin: 0 10rpx;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 10rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.form-input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+}
+
+.form-textarea {
+  width: 100%;
+  height: 160rpx;
+  padding: 20rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+}
+
+.form-picker {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 80rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+}
+
+/* 详情样式 */
+.detail-item {
+  margin-bottom: 20rpx;
+}
+
+.detail-label {
+  display: block;
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 6rpx;
+}
+
+.detail-value {
+  font-size: 30rpx;
+  color: #333;
+}
+
+.warning-text {
+  color: #FF9800;
+}
