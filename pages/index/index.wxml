@@ -1,4 +1,7 @@
 <view class="container">
+  <view class="page" >
+  <image src="/images/backgrounds/background_pattern.png"></image>
+</view>
   <!-- 装饰元素 -->
   <view class="decoration decoration-1"></view>
   <view class="decoration decoration-2"></view>

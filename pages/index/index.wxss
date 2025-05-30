@@ -5,7 +5,6 @@
   padding: 30rpx;
   min-height: 100vh;
   background-color: #f8f8f8;
-  background-image: url('/images/backgrounds/background_pattern.svg');
   background-repeat: repeat;
   background-size: 400rpx;
   background-attachment: fixed;

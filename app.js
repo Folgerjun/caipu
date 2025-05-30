@@ -43,7 +43,7 @@ App({
         if (res.code) {
           // 发送 res.code 到后台换取 openId, sessionKey, unionId
           // 实际项目中需要调用后端接口
-          console.log('登录成功，获取到code:', res.code);
+          console.log('登录成功, 获取到code:', res.code);
           this.getUserInfo();
         } else {
           console.log('登录失败：' + res.errMsg);
