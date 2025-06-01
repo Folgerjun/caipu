@@ -4,7 +4,7 @@
   <block wx:if="{{isDetailMode}}">
     <!-- 菜谱头部 -->
     <view class="recipe-header">
-      <image class="recipe-image" src="{{recipeData.image || '/images/default-recipe.png'}}" mode="aspectFill"></image>
+      <image class="recipe-image" src="{{recipeData.image || '/images/default/default-recipe.png'}}" mode="aspectFill"></image>
       <view class="recipe-header-overlay">
         <view class="recipe-title">{{recipeData.name}}</view>
         <view class="recipe-meta">
@@ -122,7 +122,7 @@
       <!-- 最近推荐 -->
       <view class="recipe-list" wx:if="{{activeTab === 'recent' && !showEmptyState}}">
         <view class="recipe-card" wx:for="{{recentRecommendations}}" wx:key="id" bindtap="viewRecipeDetail" data-id="{{item.id}}">
-          <image class="recipe-card-image" src="{{item.image || '/images/default-recipe.png'}}" mode="aspectFill"></image>
+          <image class="recipe-card-image" src="{{item.image || '/images/default/default-recipe.png'}}" mode="aspectFill"></image>
           <view class="recipe-card-content">
             <view class="recipe-card-title">{{item.name}}</view>
             <view class="recipe-card-meta">
@@ -147,7 +147,7 @@
       <!-- 我的收藏 -->
       <view class="recipe-list" wx:if="{{activeTab === 'favorite' && !showEmptyState}}">
         <view class="recipe-card" wx:for="{{favoriteRecipes}}" wx:key="id" bindtap="viewRecipeDetail" data-id="{{item.id}}">
-          <image class="recipe-card-image" src="{{item.image || '/images/default-recipe.png'}}" mode="aspectFill"></image>
+          <image class="recipe-card-image" src="{{item.image || '/images/default/default-recipe.png'}}" mode="aspectFill"></image>
           <view class="recipe-card-content">
             <view class="recipe-card-title">{{item.name}}</view>
             <view class="recipe-card-meta">

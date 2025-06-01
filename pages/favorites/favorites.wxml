@@ -14,7 +14,7 @@
       class="recipe-card"
     >
       <view class="recipe-image-container" bindtap="viewRecipeDetail" data-id="{{item.id}}">
-        <image class="recipe-image" src="{{item.image || '/images/default-recipe.png'}}"></image>
+        <image class="recipe-image" src="{{item.image || '/images/default/default-recipe.png'}}"></image>
       </view>
       <view class="recipe-info" bindtap="viewRecipeDetail" data-id="{{item.id}}">
         <view class="recipe-name">{{item.name}}</view>

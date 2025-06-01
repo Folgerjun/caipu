@@ -107,7 +107,7 @@ Page({
   },
 
   // 生成推荐
-  generateRecommendation: function() {
+  generateRecommendation: async function() {
     const app = getApp();
     const fridgeItems = app.globalData.fridgeItems || [];
     
@@ -144,84 +144,83 @@ Page({
     
     // 调用推荐算法生成推荐
     // 注意：这里使用模拟数据，实际项目中可能需要调用后端API
-    setTimeout(() => {
-      try {
-        const recommendedRecipes = util.generateRecommendations(
-          fridgeItems,
-          preferences,
-          dislikedCombinations
-        );
-        
-        console.log(`推荐结果: 获得${recommendedRecipes.length}个菜谱`);
-        
-        // 如果没有推荐结果
-        if (recommendedRecipes.length === 0) {
-          this.setData({
-            isLoading: false
-          });
-          
-          // 提供更具体的提示信息
-          let message = '没有找到合适的推荐';
-          if (this.data.selectedCuisine !== 'all') {
-            // 如果选择了特定菜系但没有推荐，提示尝试其他菜系
-            const cuisineName = this.data.cuisineOptions.find(c => c.id === this.data.selectedCuisine)?.name || this.data.selectedCuisine;
-            message = `没有找到匹配${cuisineName}菜系的推荐，请尝试其他菜系或添加更多食材`;
-          } else {
-            message = '没有找到合适的推荐，请添加更多食材或减少菜品数量';
-          }
-          
-          wx.showToast({
-            title: message,
-            icon: 'none',
-            duration: 2500
-          });
-          return;
-        }
-      } catch (error) {
-        console.error('生成推荐时出错:', error);
+    let recommendedRecipes = [];
+    try {
+      recommendedRecipes = await util.generateRecommendations(
+        fridgeItems,
+        preferences,
+        dislikedCombinations
+      );
+      
+      console.log(`推荐结果: 获得${recommendedRecipes.length}个菜谱`);
+      
+      // 如果没有推荐结果
+      if (recommendedRecipes.length === 0) {
         this.setData({
           isLoading: false
         });
+        
+        // 提供更具体的提示信息
+        let message = '没有找到合适的推荐';
+        if (this.data.selectedCuisine !== 'all') {
+          // 如果选择了特定菜系但没有推荐，提示尝试其他菜系
+          const cuisineName = this.data.cuisineOptions.find(c => c.id === this.data.selectedCuisine)?.name || this.data.selectedCuisine;
+          message = `没有找到匹配${cuisineName}菜系的推荐，请尝试其他菜系或添加更多食材`;
+        } else {
+          message = '没有找到合适的推荐，请添加更多食材或减少菜品数量';
+        }
+        
         wx.showToast({
-          title: '推荐生成出错，请稍后再试',
-          icon: 'none'
+          title: message,
+          icon: 'none',
+          duration: 2500
         });
         return;
       }
-      
-      // 限制推荐数量
-      const limitedRecipes = recommendedRecipes.slice(0, this.data.selectedDishCount);
-      
-      // 生成推荐ID
-      const recommendationId = util.generateUniqueId();
-      
-      // 保存推荐结果
-      const recommendation = {
-        id: recommendationId,
-        date: util.formatTime(new Date(), 'MM月DD日'),
-        dishCount: limitedRecipes.length,
-        recipes: limitedRecipes,
-        timestamp: Date.now()
-      };
-      
-      // 保存到本地存储
-      const recentRecommendations = wx.getStorageSync('recentRecommendations') || [];
-      recentRecommendations.unshift(recommendation);
-      // 最多保存10条记录
-      if (recentRecommendations.length > 10) {
-        recentRecommendations.pop();
-      }
-      wx.setStorageSync('recentRecommendations', recentRecommendations);
-      
+    } catch (error) {
+      console.error('生成推荐时出错:', error);
       this.setData({
         isLoading: false
       });
-      
-      // 跳转到推荐结果页面
-      wx.navigateTo({
-        url: `/pages/recommendation/recommendation?id=${recommendationId}`
+      wx.showToast({
+        title: '推荐生成出错，请稍后再试',
+        icon: 'none'
       });
-    }, 1500); // 模拟加载时间
+      return;
+    }
+    
+    // 限制推荐数量
+    const limitedRecipes = recommendedRecipes.slice(0, this.data.selectedDishCount);
+    
+    // 生成推荐ID
+    const recommendationId = util.generateUniqueId();
+    
+    // 保存推荐结果
+    const recommendation = {
+      id: recommendationId,
+      date: util.formatTime(new Date(), 'MM月DD日'),
+      dishCount: limitedRecipes.length,
+      recipes: limitedRecipes,
+      timestamp: Date.now()
+    };
+    
+    // 保存到本地存储
+    const recentRecommendations = wx.getStorageSync('recentRecommendations') || [];
+    recentRecommendations.unshift(recommendation);
+    // 最多保存10条记录
+    if (recentRecommendations.length > 10) {
+      recentRecommendations.pop();
+    }
+    wx.setStorageSync('recentRecommendations', recentRecommendations);
+    
+    this.setData({
+      isLoading: false
+    });
+    
+    // 跳转到推荐结果页面
+    wx.navigateTo({
+      url: `/pages/recommendation/recommendation?id=${recommendationId}`
+    });
   },
 
   // 查看历史推荐

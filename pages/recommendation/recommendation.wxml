@@ -16,7 +16,7 @@
       data-id="{{item.id}}"
     >
       <view class="recipe-image-container">
-        <image class="recipe-image" src="{{item.image || '/images/default-recipe.png'}}"></image>
+        <image class="recipe-image" src="{{item.image || '/images/default/default-recipe.png'}}"></image>
         <view class="recipe-match" wx:if="{{item.matchRate}}">
           <text>匹配度 {{item.matchRate * 100}}%</text>
         </view>

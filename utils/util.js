@@ -89,6 +89,15 @@ const cuisineTypes = [
   { id: 'other', name: '其他' }
 ];
 
+// 获取菜系文本
+const getCuisineText = (cuisine) => {
+  const cuisineMap = {};
+  cuisineTypes.forEach(item => {
+    cuisineMap[item.id] = item.name;
+  });
+  return cuisineMap[cuisine] || '其他';
+};
+
 /**
  * 烹饪难度级别
  */
@@ -107,13 +116,55 @@ const generateUniqueId = () => {
 };
 
 /**
+ * 调用API的通用方法
+ * @param {String} url API地址
+ * @param {Object} data 请求数据
+ * @return {Promise} Promise对象
+ */
+function postRequest(url, data) {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: url,
+      method: 'POST',
+      data: data,
+      header: {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer pat_S2Qu1O8t26gReN6qI39Dwd5Ck2RitWnJjZRsoFiKDTaXZPhXGqdqryoKSsWemhmm'
+      },
+      success: (res) => {
+        console.log('res', res);
+        if (res.statusCode === 200) {
+          resolve(res.data); // 请求成功返回数据
+        } else {
+          reject(res); // 非200状态码视为失败
+        }
+      },
+      fail: (err) => {
+        reject(err); // 网络错误
+      }
+    });
+  });
+};
+
+// 使用示例：
+// try {
+//   const result = await postSync('https://api.example.com/data', {
+//     name: '测试数据',
+//     value: 123
+//   });
+//   console.log('请求成功：', result);
+// } catch (error) {
+//   console.error('请求失败：', error);
+// }
+
+/**
  * 根据食材列表和用户偏好生成菜品推荐
  * @param {Array} ingredients 食材列表
  * @param {Object} preferences 用户偏好
  * @param {Array} dislikedCombinations 不喜欢的组合
  * @return {Array} 推荐菜品列表
  */
-const generateRecommendations = (ingredients, preferences, dislikedCombinations) => {
+const generateRecommendations = async (ingredients, preferences, dislikedCombinations) => {
   // 这里是简化的推荐逻辑，实际项目中可能需要更复杂的算法或调用后端API
   // 示例数据，实际项目中应该从数据库或API获取
   
@@ -123,6 +174,69 @@ const generateRecommendations = (ingredients, preferences, dislikedCombinations)
     preferences: preferences,
     dislikedCombinationsCount: dislikedCombinations.length
   });
+
+  // 食材名称
+  const availableIngredientNames = ingredients.map(item => item.name);
+  // 菜系名称
+  let cai_xi = '所有菜系'
+  if (preferences.cuisines && preferences.cuisines.length > 0) {
+    cai_xi = getCuisineText(preferences.cuisines[0])
+  }
+
+  // 调用 工作流
+  // console.log('availableIngredientNames', availableIngredientNames);
+  // console.log('cai_xi', cai_xi);
+  // console.log('preferences.dishCount', preferences.dishCount);
+  const data = {
+    "workflow_id": "7510115889620434978",
+    "parameters": {
+      "cai_names": availableIngredientNames,
+      "cai_xi": cai_xi,
+      "cai_num": preferences.dishCount,
+      "need_steps": true,  // 添加这个参数来获取做菜步骤
+      "format": "json"    // 确保返回 JSON 格式数据
+    },
+    "is_async": false
+  }
+  const result = await postRequest('https://api.coze.cn/v1/workflow/run', data);
+  
+  console.log('result', result);
+
+  // 解析返回的数据
+  let recipes = [];
+  try {
+    // 如果返回的是字符串，尝试解析成 JSON
+    const parsedData = typeof result.data === 'string' ? JSON.parse(result.data) : result.data;
+    recipes = parsedData.map(recipe => ({
+      id: generateUniqueId(),
+      name: recipe.name,
+      cuisine: recipe.cuisine || 'other',
+      difficulty: recipe.difficulty || 'medium',
+      time: recipe.cookingTime || 30,
+      ingredients: (recipe.ingredients || []).map(ing => ({
+        id: generateUniqueId(),
+        name: ing.name || ing,
+        amount: ing.amount || '适量'
+      })),
+      steps: (recipe.steps || []).map((step, index) => ({
+        step: index + 1,
+        description: typeof step === 'string' ? step : step.description
+      })),
+      nutrition: recipe.nutrition || {
+        calories: '-',
+        protein: '-',
+        fat: '-',
+        carbs: '-'
+      }
+    }));
+  } catch (error) {
+    console.error('解析推荐菜谱数据失败：', error);
+    throw new Error('解析推荐菜谱数据失败');
+  }
+
+  // return recipes;
+  console.log('recipes', recipes);
+//};
   
   const mockRecipes = [
     {
@@ -245,13 +359,15 @@ const generateRecommendations = (ingredients, preferences, dislikedCombinations)
       };
     })
     .filter(recipe => {
+      return true;
       // 过滤掉匹配度过低的菜品
-      return recipe.matchRate >= 0.3; // 降低匹配度阈值，让更多菜谱有机会被推荐
+      // return recipe.matchRate >= 0.3; // 降低匹配度阈值，让更多菜谱有机会被推荐
     })
     .filter(recipe => {
       // 过滤掉用户不喜欢的组合
       return !dislikedCombinations.includes(recipe.id);
     });
+  console.log('recommendedRecipes', recommendedRecipes);
     
   // 如果指定了菜系偏好，优先筛选符合菜系的菜品
   if (preferences.cuisines && preferences.cuisines.length > 0) {
@@ -294,5 +410,6 @@ module.exports = {
   cuisineTypes,
   difficultyLevels,
   generateUniqueId,
-  generateRecommendations
+  generateRecommendations,
+  getCuisineText
 };
