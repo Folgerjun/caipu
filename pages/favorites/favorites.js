@@ -1,7 +1,10 @@
 // favorites.js
 const util = require('../../utils/util.js');
 
+const shareBehavior = require('../../behaviors/shareBehavior');
+
 Page({
+  behaviors: [shareBehavior],
   data: {
     favoriteRecipes: [], // 收藏的菜谱
     availableIngredients: [] // 冰箱中可用的食材ID列表
@@ -21,8 +24,8 @@ Page({
   // 加载收藏的菜谱
   loadFavoriteRecipes: function() {
     const app = getApp();
-    const favoriteRecipes = app.globalData.favoriteRecipes || [];
-    
+    const favoriteRecipes = app.globalData.favoriteRecipes;
+    console.log('favoriteRecipes', favoriteRecipes);
     this.setData({
       favoriteRecipes
     });
@@ -32,6 +35,7 @@ Page({
   loadAvailableIngredients: function() {
     const app = getApp();
     const fridgeItems = app.globalData.fridgeItems;
+    console.log('fridgeItems', fridgeItems);
     const availableIngredients = fridgeItems.map(item => item.id);
     
     this.setData({
@@ -57,25 +61,14 @@ Page({
 
   // 查看菜谱详情
   viewRecipeDetail: function(e) {
-    const recipeId = e.currentTarget.dataset.id;
-    
+    const recommendationId = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: `/pages/recipe/recipe?id=${recipeId}`
+      url: `/pages/recommendation/recommendation?id=${recommendationId}`
     });
   },
 
   // 检查食材是否在冰箱中
   isIngredientAvailable: function(ingredientId) {
     return this.data.availableIngredients.includes(ingredientId);
-  },
-
-  // 获取难度文本
-  getDifficultyText: function(difficulty) {
-    return util.getDifficultyText(difficulty);
-  },
-
-  // 获取菜系文本
-  getCuisineText: function(cuisine) {
-    return util.getCuisineText(cuisine);
   }
 });

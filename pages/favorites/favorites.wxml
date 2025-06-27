@@ -3,7 +3,7 @@
   <!-- 顶部标题区域 -->
   <view class="header">
     <view class="header-title">我的收藏</view>
-    <view class="header-subtitle" wx:if="{{favoriteRecipes.length > 0}}">共{{favoriteRecipes.length}}道菜谱</view>
+    <view class="header-subtitle" wx:if="{{favoriteRecipes.length > 0}}">总计数量：{{favoriteRecipes.length}}</view>
   </view>
   
   <!-- 收藏菜品列表 -->
@@ -17,8 +17,15 @@
         <image class="recipe-image" src="{{item.image || '/images/default/default-recipe.png'}}"></image>
       </view>
       <view class="recipe-info" bindtap="viewRecipeDetail" data-id="{{item.id}}">
-        <view class="recipe-name">{{item.name}}</view>
-        <view class="recipe-meta">
+        <view>{{item.date}}</view>
+        <view class="recipe-name">
+        <view 
+        wx:for="{{item.recipes}}" 
+        wx:key="id">
+        {{item.name}}
+        </view>
+        </view>
+        <!-- <view class="recipe-meta">
           <view class="recipe-meta-item">
             <text class="iconfont icon-time"></text>
             <text>{{item.time}}分钟</text>
@@ -31,8 +38,8 @@
             <text class="iconfont icon-cuisine"></text>
             <text>{{getCuisineText(item.cuisine)}}</text>
           </view>
-        </view>
-        <view class="recipe-ingredients">
+        </view> -->
+        <!-- <view class="recipe-ingredients">
           <text class="recipe-ingredients-title">所需食材：</text>
           <view class="recipe-ingredients-list">
             <text 
@@ -44,7 +51,7 @@
               {{ingredient.name}}
             </text>
           </view>
-        </view>
+        </view> -->
       </view>
       <view class="unfavorite-button" catchtap="unfavoriteRecipe" data-id="{{item.id}}">
         <text class="iconfont icon-heart-filled"></text>

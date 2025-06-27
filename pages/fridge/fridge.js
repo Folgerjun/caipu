@@ -1,7 +1,10 @@
 // fridge.js
 const util = require('../../utils/util.js');
 
+const shareBehavior = require('../../behaviors/shareBehavior');
+
 Page({
+  behaviors: [shareBehavior],
   data: {
     fridgeItems: [], // 冰箱中的所有食材
     filteredFoodItems: [], // 经过分类和搜索筛选后的食材
@@ -257,6 +260,7 @@ Page({
             title: '删除成功',
             icon: 'success'
           });
+          // this.onload();
         }
       }
     });
@@ -275,13 +279,13 @@ Page({
       return;
     }
     
-    if (!newFood.quantity) {
-      wx.showToast({
-        title: '请输入食材数量',
-        icon: 'none'
-      });
-      return;
-    }
+    // if (!newFood.quantity) {
+    //   wx.showToast({
+    //     title: '请输入食材数量',
+    //     icon: 'none'
+    //   });
+    //   return;
+    // }
     
     const app = getApp();
     

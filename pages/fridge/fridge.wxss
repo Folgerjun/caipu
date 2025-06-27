@@ -41,9 +41,9 @@
   border-radius: 50%;
 }
 
-.iconfont {
+/* .iconfont {
   font-size: 36rpx;
-}
+} */
 
 .icon-search, .icon-clear {
   color: #999;

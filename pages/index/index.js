@@ -1,7 +1,10 @@
 // index.js
 const util = require('../../utils/util.js');
 
+const shareBehavior = require('../../behaviors/shareBehavior');
+
 Page({
+  behaviors: [shareBehavior],
   data: {
     fridgeItems: [], // 冰箱中的食材
     fridgeItemsPreview: [], // 冰箱食材预览（最多显示5个）
@@ -9,11 +12,21 @@ Page({
     cuisineOptions: util.cuisineTypes, // 菜系选项
     selectedCuisine: 'all', // 默认选择全部菜系
     dishCountOptions: [1, 2, 3, 4], // 菜品数量选项
-    selectedDishCount: 3, // 默认选择3道菜
+    selectedDishCount: 2, // 默认选择3道菜
     recentRecommendations: [], // 最近的推荐
     isLoading: false, // 是否正在加载
     canRecommend: false // 是否可以推荐（冰箱是否有食材）
   },
+
+  // 可选：覆盖默认分享数据
+  // _getShareData() {
+  //   return {
+  //     title: '自定义页面标题',
+  //     path: `/pages/index/index?id=${this.data.id}`,
+  //     imageUrl: this.data.shareImage,
+  //     query: `id=${this.data.id}`
+  //   }
+  // },
 
   onLoad: function() {
     // 页面加载时执行
@@ -30,6 +43,16 @@ Page({
     // 获取最近推荐历史
     this.loadRecentRecommendations();
   },
+  
+  // // 可选：覆盖默认分享数据
+  // _getShareData() {
+  //   return {
+  //     title: '自定义页面标题',
+  //     path: `/pages/index/index?id=${this.data.id}`,
+  //     imageUrl: this.data.shareImage,
+  //     query: `id=${this.data.id}`
+  //   }
+  // },
 
   // 加载冰箱数据
   loadFridgeData: function() {
@@ -190,7 +213,7 @@ Page({
     }
     
     // 限制推荐数量
-    const limitedRecipes = recommendedRecipes.slice(0, this.data.selectedDishCount);
+    // const limitedRecipes = recommendedRecipes.slice(0, this.data.selectedDishCount);
     
     // 生成推荐ID
     const recommendationId = util.generateUniqueId();
@@ -199,8 +222,8 @@ Page({
     const recommendation = {
       id: recommendationId,
       date: util.formatTime(new Date(), 'MM月DD日'),
-      dishCount: limitedRecipes.length,
-      recipes: limitedRecipes,
+      dishCount: recommendedRecipes.length,
+      recipes: recommendedRecipes,
       timestamp: Date.now()
     };
     

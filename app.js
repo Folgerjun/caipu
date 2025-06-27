@@ -13,7 +13,7 @@ App({
     this.globalData.fridgeItems = fridgeItems;
     
     // 获取本地存储的收藏菜谱
-    const favoriteRecipes = wx.getStorageSync('favoriteRecipes') || [];
+    const favoriteRecipes = wx.getStorageSync('favoriteRecommendations') || [];
     this.globalData.favoriteRecipes = favoriteRecipes;
     
     // 获取用户近期偏好

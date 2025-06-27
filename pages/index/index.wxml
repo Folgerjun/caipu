@@ -1,6 +1,6 @@
 <view class="container">
   <view class="page" >
-  <image src="/images/backgrounds/background_pattern.png"></image>
+  <!-- <image src="/images/backgrounds/background_pattern.png"></image> -->
 </view>
   <!-- 装饰元素 -->
   <view class="decoration decoration-1"></view>
@@ -19,7 +19,7 @@
   <!-- 头部 -->
   <view class="header">
     <view class="header-title-container">
-      <view class="header-title">今天吃什么？</view>
+      <view class="header-title">炒啥子菜？</view>
     </view>
     <view class="header-robot-container">
     </view>

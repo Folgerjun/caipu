@@ -114,31 +114,27 @@
   <block wx:else>
     <!-- 标签页 -->
     <view class="tabs">
-      <view class="tab {{activeTab === 'recent' ? 'active' : ''}}" bindtap="switchTab" data-tab="recent">最近推荐</view>
+      <view class="tab {{activeTab === 'recommend' ? 'active' : ''}}" bindtap="switchTab" data-tab="recommend">最近推荐</view>
       <view class="tab {{activeTab === 'favorite' ? 'active' : ''}}" bindtap="switchTab" data-tab="favorite">我的收藏</view>
     </view>
     
     <view class="recipe-list-container">
       <!-- 最近推荐 -->
-      <view class="recipe-list" wx:if="{{activeTab === 'recent' && !showEmptyState}}">
+      <view class="recipe-list" wx:if="{{activeTab === 'recommend' && !showEmptyState}}">
         <view class="recipe-card" wx:for="{{recentRecommendations}}" wx:key="id" bindtap="viewRecipeDetail" data-id="{{item.id}}">
           <image class="recipe-card-image" src="{{item.image || '/images/default/default-recipe.png'}}" mode="aspectFill"></image>
           <view class="recipe-card-content">
-            <view class="recipe-card-title">{{item.name}}</view>
             <view class="recipe-card-meta">
               <view class="recipe-card-meta-item">
-                <text>{{item.time}}分钟</text>
-              </view>
-              <view class="recipe-card-meta-item">
-                <text>{{getDifficultyText(item.difficulty)}}</text>
-              </view>
-              <view class="recipe-card-meta-item">
-                <text>{{getCuisineText(item.cuisine)}}</text>
+                <text>{{item.date}}</text>
               </view>
             </view>
             <view class="recipe-card-ingredients">
-              <text class="ingredient-label">食材:</text>
-              <text class="ingredient-list">{{item.ingredients[0].name}}, {{item.ingredients[1].name}}, {{item.ingredients[2].name}}{{item.ingredients.length > 3 ? '...' : ''}}</text>
+              <text class="ingredient-label">菜名:</text>
+              <view wx:for="{{item.recipes}}" wx:key="id" wx:for-index="index" wx:for-item="recipe">
+                {{recipe.name}}
+                <text wx:if="{{index !== item.recipes.length-1}}">、</text>
+              </view>
             </view>
           </view>
         </view>
@@ -149,21 +145,17 @@
         <view class="recipe-card" wx:for="{{favoriteRecipes}}" wx:key="id" bindtap="viewRecipeDetail" data-id="{{item.id}}">
           <image class="recipe-card-image" src="{{item.image || '/images/default/default-recipe.png'}}" mode="aspectFill"></image>
           <view class="recipe-card-content">
-            <view class="recipe-card-title">{{item.name}}</view>
             <view class="recipe-card-meta">
               <view class="recipe-card-meta-item">
-                <text>{{item.time}}分钟</text>
-              </view>
-              <view class="recipe-card-meta-item">
-                <text>{{getDifficultyText(item.difficulty)}}</text>
-              </view>
-              <view class="recipe-card-meta-item">
-                <text>{{getCuisineText(item.cuisine)}}</text>
+                <text>{{item.date}}</text>
               </view>
             </view>
             <view class="recipe-card-ingredients">
-              <text class="ingredient-label">食材:</text>
-              <text class="ingredient-list">{{item.ingredients[0].name}}, {{item.ingredients[1].name}}, {{item.ingredients[2].name}}{{item.ingredients.length > 3 ? '...' : ''}}</text>
+              <text class="ingredient-label">菜名:</text>
+              <view wx:for="{{item.recipes}}" wx:key="id" wx:for-index="index" wx:for-item="recipe">
+                {{recipe.name}}
+                <text wx:if="{{index !== item.recipes.length-1}}">、</text>
+              </view>
             </view>
           </view>
         </view>

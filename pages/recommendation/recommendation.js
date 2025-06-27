@@ -1,7 +1,10 @@
 // recommendation.js
 const util = require('../../utils/util.js');
 
+const shareBehavior = require('../../behaviors/shareBehavior');
+
 Page({
+  behaviors: [shareBehavior],
   data: {
     recommendationId: '', // 推荐ID
     recommendation: null, // 推荐数据
@@ -41,7 +44,7 @@ Page({
       });
       
       // 计算总营养成分
-      this.calculateTotalNutrition(recommendation.recipes);
+      // this.calculateTotalNutrition(recommendation.recipes);
       
       // 检查是否已收藏
       this.checkIfFavorite(recommendationId);
@@ -70,52 +73,52 @@ Page({
   },
 
   // 计算总营养成分
-  calculateTotalNutrition: function(recipes) {
-    let totalCalories = 0;
-    let totalProtein = 0;
-    let totalFat = 0;
-    let totalCarbs = 0;
+  // calculateTotalNutrition: function(recipes) {
+  //   let totalCalories = 0;
+  //   let totalProtein = 0;
+  //   let totalFat = 0;
+  //   let totalCarbs = 0;
     
-    recipes.forEach(recipe => {
-      if (recipe.nutrition) {
-        // 累加热量
-        totalCalories += recipe.nutrition.calories || 0;
+  //   recipes.forEach(recipe => {
+  //     if (recipe.nutrition) {
+  //       // 累加热量
+  //       totalCalories += recipe.nutrition.calories || 0;
         
-        // 累加蛋白质（需要处理单位）
-        if (recipe.nutrition.protein) {
-          const protein = parseFloat(recipe.nutrition.protein);
-          if (!isNaN(protein)) {
-            totalProtein += protein;
-          }
-        }
+  //       // 累加蛋白质（需要处理单位）
+  //       if (recipe.nutrition.protein) {
+  //         const protein = parseFloat(recipe.nutrition.protein);
+  //         if (!isNaN(protein)) {
+  //           totalProtein += protein;
+  //         }
+  //       }
         
-        // 累加脂肪（需要处理单位）
-        if (recipe.nutrition.fat) {
-          const fat = parseFloat(recipe.nutrition.fat);
-          if (!isNaN(fat)) {
-            totalFat += fat;
-          }
-        }
+  //       // 累加脂肪（需要处理单位）
+  //       if (recipe.nutrition.fat) {
+  //         const fat = parseFloat(recipe.nutrition.fat);
+  //         if (!isNaN(fat)) {
+  //           totalFat += fat;
+  //         }
+  //       }
         
-        // 累加碳水化合物（需要处理单位）
-        if (recipe.nutrition.carbs) {
-          const carbs = parseFloat(recipe.nutrition.carbs);
-          if (!isNaN(carbs)) {
-            totalCarbs += carbs;
-          }
-        }
-      }
-    });
+  //       // 累加碳水化合物（需要处理单位）
+  //       if (recipe.nutrition.carbs) {
+  //         const carbs = parseFloat(recipe.nutrition.carbs);
+  //         if (!isNaN(carbs)) {
+  //           totalCarbs += carbs;
+  //         }
+  //       }
+  //     }
+  //   });
     
-    this.setData({
-      totalNutrition: {
-        calories: totalCalories,
-        protein: totalProtein.toFixed(1) + 'g',
-        fat: totalFat.toFixed(1) + 'g',
-        carbs: totalCarbs.toFixed(1) + 'g'
-      }
-    });
-  },
+  //   this.setData({
+  //     totalNutrition: {
+  //       calories: totalCalories,
+  //       protein: totalProtein.toFixed(1) + 'g',
+  //       fat: totalFat.toFixed(1) + 'g',
+  //       carbs: totalCarbs.toFixed(1) + 'g'
+  //     }
+  //   });
+  // },
 
   // 检查是否已收藏
   checkIfFavorite: function(recommendationId) {
@@ -204,26 +207,26 @@ Page({
   },
 
   // 分享功能
-  onShareAppMessage: function() {
+  _getShareData() {
     return {
-      title: `今天做什么菜 - ${this.data.recommendation.date}推荐`,
+      title: `今天炒啥子菜 - ${this.data.recommendation.date}推荐`,
       path: `/pages/recommendation/recommendation?id=${this.data.recommendationId}`,
-      imageUrl: this.data.recommendation.recipes[0]?.image || '/images/share-default.png'
+      imageUrl: this.data.recommendation.recipes[0]?.image || '/images/default/chaocai.png'
     };
   },
 
   // 获取难度文本
-  getDifficultyText: function(difficulty) {
-    const difficultyMap = {
-      'easy': '简单',
-      'medium': '中等',
-      'hard': '困难'
-    };
-    return difficultyMap[difficulty] || '未知';
-  },
+  // getDifficultyText: function(difficulty) {
+  //   const difficultyMap = {
+  //     'easy': '简单',
+  //     'medium': '中等',
+  //     'hard': '困难'
+  //   };
+  //   return difficultyMap[difficulty] || '未知';
+  // },
 
   // 检查食材是否可用
-  isIngredientAvailable: function(ingredientId) {
-    return this.data.availableIngredients.includes(ingredientId);
-  }
+  // isIngredientAvailable: function(ingredientId) {
+  //   return this.data.availableIngredients.includes(ingredientId);
+  // }
 });

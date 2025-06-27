@@ -1,5 +1,10 @@
 // profile.js
+const util = require('../../utils/util.js');
+
+const shareBehavior = require('../../behaviors/shareBehavior');
+
 Page({
+  behaviors: [shareBehavior],
   data: {
     userInfo: null
   },
@@ -55,29 +60,33 @@ Page({
 
   // 导航到浏览历史页面
   navigateToHistory: function() {
-    wx.navigateTo({
-      url: '/pages/history/history'
-    });
+    util.showNoneToast('规划中，敬请期待～', 1500);
+    // wx.navigateTo({
+    //   url: '/pages/history/history'
+    // });
   },
 
   // 导航到设置页面
   navigateToSettings: function() {
-    wx.navigateTo({
-      url: '/pages/settings/settings'
-    });
+    util.showNoneToast('规划中，敬请期待～', 1500);
+    // wx.navigateTo({
+    //   url: '/pages/settings/settings'
+    // });
   },
 
   // 导航到意见反馈页面
   navigateToFeedback: function() {
-    wx.navigateTo({
-      url: '/pages/feedback/feedback'
-    });
+    util.showNoneToast('欢迎评价打分支持～', 1500);
+    // wx.navigateTo({
+    //   url: '/pages/feedback/feedback'
+    // });
   },
 
   // 导航到关于我们页面
   navigateToAbout: function() {
-    wx.navigateTo({
-      url: '/pages/about/about'
-    });
+    util.showNoneToast('炒菜纠结患者～', 1500);
+    // wx.navigateTo({
+    //   url: '/pages/about/about'
+    // });
   }
 });
